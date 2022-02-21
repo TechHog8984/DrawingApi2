@@ -7,17 +7,9 @@ The synapse Drawing API is doodoo, so I made my own. This is fully backwards com
 # Links
 
 ## [Changelog](#changelog)
-## [Extra info](#extra%20info)
+## [Extra info](#extra-info-1)
 
 # Changelog
-<!-- V1 {<br>
-<p>Main creation of the code.<br>
-Currently is just a clone of the Drawing API and only supports fonts and Drawing.new</p>
-}
-
-V1.1 {
-  
-} -->
 
 ## V1
 > ### Initial creation of code.
