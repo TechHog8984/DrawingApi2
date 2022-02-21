@@ -4,6 +4,10 @@ Custom synapse Drawing API
 # Why?
 The synapse Drawing API is doodoo, so I made my own. This is fully backwards compatible and also includes many useful features and benefits.
 
+# Links
+
+## [Changelog](#changelog)
+## [Extra info](#extra%20info)
 
 # Changelog
 <!-- V1 {<br>
@@ -43,3 +47,5 @@ V1.1 {
 ## V1.3
 > ### Bug fixes with the color support
 > ### Fully documented the code.
+
+# Extra info
