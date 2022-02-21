@@ -6,8 +6,8 @@ The synapse Drawing API is doodoo, so I made my own. This is fully backwards com
 
 # Links
 
-## [Changelog](#changelog)
-## [Extra info](#extra-info-1)
+#### [Changelog](#changelog)
+#### [Extra info](#extra-info-1)
 
 # Changelog
 
