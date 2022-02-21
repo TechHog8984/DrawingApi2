@@ -39,3 +39,7 @@ V1.1 {
   Drawing.new{'Square', Color = '255, 100, 255'}; --pink color
   ```
 > ### For the RGB info, any seperator will work, as long as it is not a number. (There can even be full words or sentences between them, if you really want)
+
+## V1.3
+> ### Bug fixes with the color support
+> ### Fully documented the code.
