@@ -1,6 +1,7 @@
 local gmatch = string.gmatch;
 local sub = string.sub;
 local find = string.find;
+local match = string.match;
 
 
 local Drawingnew = Drawing.new;
@@ -233,7 +234,7 @@ local ObjectMT = {
 									elseif ValueType == 'string' then
 										if sub(Value, 1, 1) == '#' then
 											New = Color3.fromHex(Value);
-										elseif find(Value, ',') then
+										elseif match(Value, '%d') then
 											local RGB = {};
 											local m = gmatch(Value, '([%d]+)');
 											RGB[1] = m();
@@ -241,6 +242,8 @@ local ObjectMT = {
 											RGB[3] = m();
 
 											New = Color3.fromRGB(unpack(RGB));
+										else
+											return error('Invalid syntax for setting color. Try passing through a hex or rgb values (three numbers seperated by any non-number character).', 2);
 										end;
 									end;
 
