@@ -424,7 +424,7 @@ local function AddCustomObject(Type, RealType, CustomProperties, CustomMT, Init)
 					RealProperties.Object[I] = V;
 				end;
 
-				CustomObjects[Type].Properties = RealProperties.
+				CustomObjects[Type].Properties = RealProperties;
 
 				Properties[Type] = RealProperties;
 			else
