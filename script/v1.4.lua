@@ -107,7 +107,7 @@ do --properties
 				Size = {'number', 16},
 				Center = {'boolean', false},
 				Outline = {'boolean', false},
-				OutlineColor = {'Color3', black},
+				OutlineColor = {'Color3,string', black},
 				Position = {'Vector2', ZeroZero}, 
 				TextBounds = {'Vector2', nil},
 				Font = {'number', 0},
