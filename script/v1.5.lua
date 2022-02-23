@@ -424,6 +424,8 @@ local function AddCustomObject(Type, RealType, CustomProperties, CustomMT, Init)
 					RealProperties.Object[I] = V;
 				end;
 
+				CustomObjects[Type].Properties = RealProperties.
+
 				Properties[Type] = RealProperties;
 			else
 				return error('Expected Properties (table) as third argument, got ' .. type(Properties), 2);
