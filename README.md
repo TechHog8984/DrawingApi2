@@ -40,4 +40,8 @@ The synapse Drawing API is doodoo, so I made my own. This is fully backwards com
 > ### Bug fixes with the color support
 > ### Fully documented the code.
 
+## V1.4
+> ### Added support for custom objects.
+> ### See [Examples](/examples) for more info
+
 # Extra info
