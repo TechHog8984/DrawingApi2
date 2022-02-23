@@ -45,4 +45,8 @@ The synapse Drawing API is doodoo, so I made my own. This is fully backwards com
 > ### Added support for custom objects.
 > ### See [Examples](/examples) for more info.
 
+## V1.5
+> ### Added Parent property to all objects.
+> ### Is used in addition to Descendants. When you set an Object's Parent, it will add said Object to its now Parent's Descendants table. This will make sure that whenever you :Remove the Parent, Object will be removed as well.
+
 # Extra info
