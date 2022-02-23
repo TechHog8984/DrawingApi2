@@ -41,7 +41,8 @@ The synapse Drawing API is doodoo, so I made my own. This is fully backwards com
 > ### Fully documented the code.
 
 ## V1.4
+> ### Added aliases for Drawing.new: .new, .New, .create, .Create
 > ### Added support for custom objects.
-> ### See [Examples](/examples) for more info
+> ### See [Examples](/examples) for more info.
 
 # Extra info
