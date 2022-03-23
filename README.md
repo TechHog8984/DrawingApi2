@@ -49,10 +49,26 @@ The synapse Drawing API is doodoo, so I made my own. This is fully backwards com
 > ### Added Parent property to all objects.
 > ### Is used in addition to Descendants. When you set an Object's Parent, it will add said Object to its now Parent's Descendants table. This will make sure that whenever you :Remove the Parent, Object will be removed as well.
 
-## V1.6
-> ### Bug fixes and minor overall code improvements.
-> ### Added "Changed" event.
-> ### Enforced MouseButton1Click on ALL Objects. This was to evade an issue, but there will be support for clicking on all objects in the future as there isn't already :(.
-
+## V1.6 (BIG UPDATE)
+> ### Bug fixes and a couple of minor overall code improvements.
+> 
+> ### Added default custom objects which is the TextButton in [this example](/examples/Custom%20TextButton.lua) (improved heavily) and TextLabel.
+> ### These default custom objects can be accessed once calling Drawing.AddDefaultCustomObjects().
+> 
+> ### Added cursor which can be enabled / disabled by calling Drawing.(Enable/Disable)Cursor().
+> ### Cursor is disabled by default.
+> 
+> ### Added mouse input detection to handle clicking and other mouse-related events.
+> ### Added "MouseButton1Up", "MouseButton1Down", "MouseButton1Click", and "Changed" events for all objects.
+> ### Added "CanDrag"(\<boolean>) property that determines whether or not the object is draggable.
+> ### Added some boolean properties used internally with click detection for all objects, although you can still access them (and even set them, although that will definitely mess with things if you don't know what you are doing)
+  > #### ^ These are as follows:
+  > #### "CanDrag"
+  > #### "Hovering"
+  > #### "CanClick"
+  > #### "Dragging"
+  > #### "IsMouseButton1Up" &
+  > #### "IsMouseButton1Down"
+> # !NOTE! AS OF NOW Mouse Input features ONLY WORK on "Image"s and "Square"s!!!!
 
 # Extra info
