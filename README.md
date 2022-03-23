@@ -49,4 +49,10 @@ The synapse Drawing API is doodoo, so I made my own. This is fully backwards com
 > ### Added Parent property to all objects.
 > ### Is used in addition to Descendants. When you set an Object's Parent, it will add said Object to its now Parent's Descendants table. This will make sure that whenever you :Remove the Parent, Object will be removed as well.
 
+## V1.6
+> ### Bug fixes and minor overall code improvements.
+> ### Added "Changed" event.
+> ### Enforced MouseButton1Click on ALL Objects. This was to evade an issue, but there will be support for clicking on all objects in the future as there isn't already :(.
+
+
 # Extra info
