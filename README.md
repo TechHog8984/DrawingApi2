@@ -49,7 +49,7 @@ The synapse Drawing API is doodoo, so I made my own. This is fully backwards com
 > ### Added Parent property to all objects.
 > ### Is used in addition to Descendants. When you set an Object's Parent, it will add said Object to its now Parent's Descendants table. This will make sure that whenever you :Remove the Parent, Object will be removed as well.
 
-## V1.6 (BIG UPDATE)
+## V1.6 (BIG UPDATE, !MISSING NOTES!)
 > ### Bug fixes and a couple of minor overall code improvements.
 > 
 > ### Added default custom objects which is the TextButton in [this example](/examples/Custom%20TextButton.lua) (improved heavily) and TextLabel.
