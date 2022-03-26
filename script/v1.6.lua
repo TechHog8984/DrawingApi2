@@ -111,13 +111,20 @@ do --properties
 				CanDrag = {'boolean', false},
 				Hovering = {'boolean', false},
 				CanClick = {'boolean', false},
+				CanRightClick = {'boolean', false},
+
 				Dragging = {'boolean', false},
 				IsMouseButton1Up = {'boolean', false},
 				IsMouseButton1Down = {'boolean', false},
+				IsMouseButton2Up = {'boolean', false},
+				IsMouseButton2Down = {'boolean', false},
 
 				MouseButton1Up = {'userdata', nil},
 				MouseButton1Down = {'userdata', nil},
 				MouseButton1Click = {'userdata', nil},
+				MouseButton2Up = {'userdata', nil},
+				MouseButton2Down = {'userdata', nil},
+				MouseButton2Click = {'userdata', nil},
 				
 				Changed = {'userdata', nil},
 			},
@@ -495,7 +502,7 @@ function Drawing:AddDefaultCustomObjects()
 			Position = {'Vector2', Vector2.new(1920/2 - 115, 1080/2 - 50)},
 		},
 		Object = {
-			Text = {'string', 'Text2'},
+			Text = {'string', 'Text'},
 			TextColor = {'Color3,string', '0 0 0'},
 
 			TextTransparency = {'number', 1},
@@ -569,10 +576,11 @@ function Drawing:AddDefaultCustomObjects()
 		__newindex = function(self, Index, Value)
 			local TextObject = rawget(self, '__textobject');
 			if TextObject then
-				if sub(Index, 1, 4) == 'Text' then
+				if Index == 'Font' then
+					TextObject[Index] = Value;
+				elseif sub(Index, 1, 4) == 'Text' then
 					if Index == 'Text' then
-						local I = table.find(Drawing.Objects, self);
-						TextObject.Text = Value;
+						TextObject[Index] = Value;
 						return false;
 					else
 						local RealIndex = sub(Index, 5, -1);
@@ -746,18 +754,59 @@ do --Input Handling
 	local UIS = game:GetService'UserInputService';
 
 	local InputBeganCon = UIS.InputBegan:Connect(function(Input)
-		local MouseButton1 = Input.UserInputType and Input.UserInputType == Enum.UserInputType.MouseButton1;
+		local UIT = Input.UserInputType;
+		if UIT then
+			local MouseButton1 = UIT == Enum.UserInputType.MouseButton1;
+			local MouseButton2 = UIT == Enum.UserInputType.MouseButton2; 
 
-		for I, Object in next, Drawing.Objects do
-			if type(Object) == 'table' and rawget(Object, '__exists') then
-				if MouseButton1 and Object.Hovering then
-					Object.CanClick = true;
-					Object.Dragging = (Object.CanDrag and true) or false;
-					Object.IsMouseButton1Down = true;
-					Object.IsMouseButton1Up = false;
+			for I, Object in next, Drawing.Objects do
+				if type(Object) == 'table' and rawget(Object, '__exists') then
+					if MouseButton1 and Object.Hovering then
+						Object.CanClick = true;
+						Object.Dragging = (Object.CanDrag and true) or false;
+						Object.IsMouseButton1Down = true;
+						Object.IsMouseButton1Up = false;
 
-					Object.MouseButton1Down:Fire();
+						Object.MouseButton1Down:Fire();
+					elseif MouseButton2 and Object.Hovering then
+						Object.CanRightClick = true;
+						Object.IsMouseButton2Down = true;
+						Object.IsMouseButton2Up = false;
+
+						Object.MouseButton2Down:Fire();
+					end;
 				end;
+			end;
+		end;
+	end);
+	local InputEndedCon = UIS.InputEnded:Connect(function(Input)
+		local UIT = Input.UserInputType;
+		if UIT then
+			local MouseButton1 = UIT == Enum.UserInputType.MouseButton1;
+			local MouseButton2 = UIT == Enum.UserInputType.MouseButton2; 
+			for I, Object in next, Drawing.Objects do
+				if type(Object) == 'table' and rawget(Object, '__exists') then
+					if MouseButton1 then
+						Object.Dragging = false;
+						if Object.IsMouseButton1Down then
+							Object.IsMouseButton1Down = false;
+							Object.IsMouseButton1Up = true;
+
+							Object.MouseButton1Up:Fire();
+							if Object.CanClick then
+								Object.MouseButton1Click:Fire();
+							end;
+						end;
+					elseif MouseButton2 then
+						Object.IsMouseButton2Down = false;
+						Object.IsMouseButton2Up = true;
+
+						Object.MouseButton2Up:Fire();
+						if Object.CanRightClick then
+							Object.MouseButton2Click:Fire();
+						end;
+					end;
+				end
 			end;
 		end;
 	end);
@@ -805,6 +854,7 @@ do --Input Handling
 
 					if OldHovering and not Hovering then
 						Object.CanClick = false;
+						Object.CanRightClick = false;
 					end;
 
 					if Object.CanDrag and Object.Dragging then
@@ -832,26 +882,6 @@ do --Input Handling
 					end;
 				end;
 			end;
-		end;
-	end);
-
-	local InputEndedCon = UIS.InputEnded:Connect(function(Input)
-		local MouseButton1 = Input.UserInputType and Input.UserInputType == Enum.UserInputType.MouseButton1;
-		for I, Object in next, Drawing.Objects do
-			if type(Object) == 'table' and rawget(Object, '__exists') then
-				if MouseButton1 then
-					Object.Dragging = false;
-					if Object.IsMouseButton1Down then
-						Object.IsMouseButton1Down = false;
-						Object.IsMouseButton1Up = true;
-
-						Object.MouseButton1Up:Fire();
-						if Object.CanClick and type(Object.MouseButton1Click) == 'userdata' then
-							Object.MouseButton1Click:Fire();
-						end;
-					end;
-				end;
-			end
 		end;
 	end);
 end;
