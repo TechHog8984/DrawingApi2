@@ -71,4 +71,7 @@ The synapse Drawing API is doodoo, so I made my own. This is fully backwards com
   > #### "IsMouseButton1Down"
 > # !NOTE! AS OF NOW Mouse Input features ONLY WORK on "Image"s and "Square"s!!!!
 
+## V1.6.1
+> ### Fixed bug disallowing the setting of Fonts for the default custom objects (TextButton, TextLabel)
+
 # Extra info
