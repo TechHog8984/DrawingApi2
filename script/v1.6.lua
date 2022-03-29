@@ -177,7 +177,7 @@ do --properties
 				Color = ColorProperty,
 
 				Thickness = ThicknessProperty,
-				NumSides = {'number', 100},
+				NumSides = {'number', nil},
 				Radius = {'number', 1},
 				Filled = {'boolean', true},
 				Position = {'Vector2', ZeroZero},
@@ -344,7 +344,7 @@ do --object metatable
 									--check if the property exists
 									if DrawingProperty or ObjectProperty then
 										--check if we are setting the color to allow support for strings
-										if Index == 'Color' then
+										if Index == 'Color' or Index == 'OutlineColor' then
 											--just so that I don't f*ck up any variables
 											local Old = Value;
 											local New;
@@ -452,6 +452,11 @@ do --object metatable
 		end,
 	};
 	Drawing.ObjectMT = ObjectMT;
+end;
+
+local function PropertyCheck(Object, Property)
+	local ClassName = Object.ClassName;
+	return Properties.Default.Drawing[Property] or Properties.Default.Object[Property] or Properties[ClassName].Drawing[Property] or Properties[ClassName].Object[Property];
 end;
 
 --for making custom objects
@@ -563,7 +568,8 @@ function Drawing:AddDefaultCustomObjects()
 					else
 						--otherwise, subtract the Text and see if that property exists (I.E.: TextTransparency -> Transparenecy, TextColor -> Color, etc,.)
 						local RealIndex = sub(Index, 5, -1);
-						if Properties.Default.Drawing[RealIndex] or Properties.Default.Object[RealIndex] or Properties.Text.Drawing[RealIndex] or Properties.Text.Object[RealIndex] then
+						if PropertyCheck(TextObject, RealIndex) then
+						-- if Properties.Default.Drawing[RealIndex] or Properties.Default.Object[RealIndex] or Properties.Text.Drawing[RealIndex] or Properties.Text.Object[RealIndex] then
 							return TextObject[RealIndex];
 						end;
 					end;
@@ -584,7 +590,8 @@ function Drawing:AddDefaultCustomObjects()
 						return false;
 					else
 						local RealIndex = sub(Index, 5, -1);
-						if Properties.Default.Drawing[RealIndex] or Properties.Default.Object[RealIndex] or Properties.Text.Drawing[RealIndex] or Properties.Text.Object[RealIndex] then
+						if PropertyCheck(TextObject, RealIndex) then
+						-- if Properties.Default.Drawing[RealIndex] or Properties.Default.Object[RealIndex] or Properties.Text.Drawing[RealIndex] or Properties.Text.Object[RealIndex] then
 							TextObject[RealIndex] = Value;
 							return false;
 						end;
@@ -605,7 +612,8 @@ function Drawing:AddDefaultCustomObjects()
 					TextObject.Text = V[2];
 				else
 					local RealIndex = sub(I, 5, -1);
-					if Properties.Default.Drawing[RealIndex] or Properties.Default.Object[RealIndex] or Properties.Text.Drawing[RealIndex] or Properties.Text.Object[RealIndex] then
+					if PropertyCheck(TextObject, RealIndex) then
+						-- if Properties.Default.Drawing[RealIndex] or Properties.Default.Object[RealIndex] or Properties.Text.Drawing[RealIndex] or Properties.Text.Object[RealIndex] then
 						TextObject[RealIndex] = V[2];
 					end;
 				end;
@@ -712,6 +720,9 @@ local function CreateObject(Arg1)
 	Object.MouseButton1Up = CreateEvent();
 	Object.MouseButton1Down = CreateEvent();
 	Object.MouseButton1Click = CreateEvent();
+	Object.MouseButton2Up = CreateEvent();
+	Object.MouseButton2Down = CreateEvent();
+	Object.MouseButton2Click = CreateEvent();
 	Object.Changed = CreateEvent();
 	
 	--once the object is made, if there is custom info and there is the init function which should be called after the object is initialized (/ created), call it
@@ -818,21 +829,24 @@ do --Input Handling
 
 	local function IsHovering(Object)
 		if type(Object) == 'table' and rawget(Object, '__exists') then
-			local MousePos = GetMouseLocation();
-			local ObjectPos = Object.Position;
-			local DrawingSize = Object.Size;
-			
-			local PosX = (typeof(ObjectPos) == 'Vector2' and ObjectPos.X) or ObjectPos;
-			local PosY = (typeof(ObjectPos) == 'Vector2' and ObjectPos.Y) or ObjectPos;
-			
-			if Object.ClassName == 'Text' then
-				DrawingSize = Object.TextBounds;
+			if PropertyCheck(Object, 'Position') and PropertyCheck(Object, 'Size') then
+				local MousePos = GetMouseLocation();
+				local ObjectPos = Object.Position;
+				local DrawingSize = Object.Size;
+				
+				local PosX = (typeof(ObjectPos) == 'Vector2' and ObjectPos.X) or ObjectPos;
+				local PosY = (typeof(ObjectPos) == 'Vector2' and ObjectPos.Y) or ObjectPos;
+				
+				if Object.ClassName == 'Text' then
+					DrawingSize = Object.TextBounds;
+				end;
+
+				local SizeX = (typeof(DrawingSize) == 'Vector2' and DrawingSize.X) or DrawingSize;
+				local SizeY = (typeof(DrawingSize) == 'Vector2' and DrawingSize.Y) or DrawingSize;
+
+				return MousePos.X >= PosX and MousePos.X <= PosX + SizeX and MousePos.Y >= PosY and MousePos.Y <= PosY + SizeY;
 			end;
-
-			local SizeX = (typeof(DrawingSize) == 'Vector2' and DrawingSize.X) or DrawingSize;
-			local SizeY = (typeof(DrawingSize) == 'Vector2' and DrawingSize.Y) or DrawingSize;
-
-			return MousePos.X >= PosX and MousePos.X <= PosX + SizeX and MousePos.Y >= PosY and MousePos.Y <= PosY + SizeY;
+			return false;
 		else
 			return error('Object doesn\'t exist', 2);
 		end;
