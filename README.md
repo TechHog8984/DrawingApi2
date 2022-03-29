@@ -74,4 +74,8 @@ The synapse Drawing API is doodoo, so I made my own. This is fully backwards com
 ## V1.6.1
 > ### Fixed bug disallowing the setting of Fonts for the default custom objects (TextButton, TextLabel)
 
+## V1.6.2
+> ### Fixed crucial bug where MouseButton2... Events weren't being created, erroring at line 812.
+> ### This is a mistake for me for not testing after last bug fix.
+
 # Extra info
