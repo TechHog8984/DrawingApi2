@@ -829,8 +829,8 @@ do --Input Handling
 
 	local function IsHovering(Object)
 		if type(Object) == 'table' and rawget(Object, '__exists') then
+			local MousePos = GetMouseLocation();
 			if PropertyCheck(Object, 'Position') and PropertyCheck(Object, 'Size') then
-				local MousePos = GetMouseLocation();
 				local ObjectPos = Object.Position;
 				local DrawingSize = Object.Size;
 				
@@ -845,6 +845,10 @@ do --Input Handling
 				local SizeY = (typeof(DrawingSize) == 'Vector2' and DrawingSize.Y) or DrawingSize;
 
 				return MousePos.X >= PosX and MousePos.X <= PosX + SizeX and MousePos.Y >= PosY and MousePos.Y <= PosY + SizeY;
+			elseif PropertyCheck(Object, 'Radius') then
+				local Distance = (Object.Position - MousePos).Magnitude;
+
+				return Distance <= Object.Radius;
 			end;
 			return false;
 		else
