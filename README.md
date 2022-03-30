@@ -75,7 +75,11 @@ The synapse Drawing API is doodoo, so I made my own. This is fully backwards com
 > ### Fixed bug disallowing the setting of Fonts for the default custom objects (TextButton, TextLabel)
 
 ## V1.6.2
-> ### Fixed crucial bug where MouseButton2... Events weren't being created, erroring at line 812.
+> ### Fixed crucial bug where MouseButton2\[...] Events weren't being created, erroring at line 812.
 > ### This is a mistake for me for not testing after last bug fix.
+
+## V1.6.3
+> ### Added Mouse Input feature support for "Circle"s
+> ### Mouse Input features now ONLY WORK on "Image"s, "Square"s, and "Circle"s
 
 # Extra info
