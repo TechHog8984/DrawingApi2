@@ -1,3 +1,5 @@
+# !!!!! MOVED TO GITLAB: https://gitlab.com/te4224/Scripts/-/tree/main/DrawingApi2
+
 # DrawingApi2
 Custom synapse Drawing API
 
